@@ -22,7 +22,7 @@ let progress = 100
 let startX = 0
 let active = 0
 let isDown = false
-
+let modalActive = false
 
 
 const displayItems = (item, index, active) => {
@@ -57,14 +57,16 @@ $items.forEach((item, i) => {
     item.addEventListener('click', () => {
         if (active === i) {
 
+            modalActive = true;
             let modal = document.getElementById(active);
             modal.style.display = "block";
             let span = modal.getElementsByClassName("close")[0];
-            span.onclick = () => { modal.style.display = "none" }
+            span.onclick = () => { modal.style.display = "none"; modalActive = false; }
 
             window.onclick = function(event) {
                 if (event.target === modal) {
                     modal.style.display = "none";
+                    modalActive = false;
                 }
             }
 
@@ -78,9 +80,11 @@ $items.forEach((item, i) => {
 Handlers
 --------------------*/
 const handleWheel = e => {
-    const wheelProgress = e.deltaY * speedWheel
-    progress = progress + wheelProgress
-    animate()
+    if (!modalActive) {
+        const wheelProgress = e.deltaY * speedWheel
+        progress = progress + wheelProgress
+        animate()
+    }
 }
 
 const handleMouseMove = (e) => {
@@ -98,8 +102,10 @@ const handleMouseMove = (e) => {
 }
 
 const handleMouseDown = e => {
-    isDown = true
-    startX = e.clientX || (e.touches && e.touches[0].clientX) || 0
+    if (!modalActive) {
+        isDown = true
+        startX = e.clientX || (e.touches && e.touches[0].clientX) || 0
+    }
 }
 
 const handleMouseUp = () => {
