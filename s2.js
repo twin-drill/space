@@ -118,22 +118,20 @@ document.addEventListener('touchmove', handleMouseMove)
 document.addEventListener('touchend', handleMouseUp)
 
 //onload
-progress = 0;
-animate();
-// setTimeout(() => {
-//     progress = 100
-//     active = $items.length - 1;
-//
-//     let timeout = 200;
-//     let len = $items.length;
-//
-//     for (let i = len - 1; i >= 0; --i) {
-//         if (i === len - 1) continue;
-//         displayItemsT($items[i], i, active, (len - i) * timeout, len - 1);
-//     }
-//     setTimeout(() => {
-//         progress = (100 / $items.length) / 2; // start on 1
-//         animate();
-//     }, timeout * len + 1000)
-//
-// }, 2000);
+setTimeout(() => {
+    progress = 100
+    active = $items.length - 1;
+
+    let timeout = 200;
+    let len = $items.length;
+
+    for (let i = len - 1; i >= 0; --i) {
+        if (i === len - 1) continue;
+        displayItemsT($items[i], i, active, (len - i) * timeout, len - 1);
+    }
+    setTimeout(() => {
+        progress = (100 / $items.length) / 2; // start on 1
+        animate();
+    }, timeout * len + 1000)
+
+}, 2000);
